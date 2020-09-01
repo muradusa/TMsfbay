@@ -6,6 +6,7 @@ function App() {
 
   const [input, setInput] = useState("");
   const [file, setFile] = useState("");
+  const [progress, setProgress] =useState("")
 
 
   const handleInputChange = (e) => {
@@ -18,8 +19,37 @@ function App() {
     setFile(e.target.file)
   }
 
-  const handleUpload = (e) => {
+  const handleUpload = () => {
+    const uploadTask = storage.ref(`images/${file.name}`).put(file);
 
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        //Progress function
+        const progress = Math.round(
+          (snapshot.bytesTransferred/snapshot.totalBytes) * 100
+        );
+        setProgress(progress)      
+      },
+      (error) => {
+        console.log(error)
+      },
+      () => {
+        // complete function
+        storage
+          .ref("images")
+          .child(file.name)
+          .getDownloadURL()
+          .then(url => {
+            //post image inside db
+            db.collection("posts").add({
+              timestamp: firebase.firestore.FieldValue.serverTime,
+              input: input,
+              file: url
+            })
+          })
+      }
+    )
   }
 
  
