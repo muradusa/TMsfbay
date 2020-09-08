@@ -49,7 +49,7 @@ function App() {
       () => {
         // complete function
         storage
-          .ref("images")
+          .ref("file")
           .child(file.name)
           .getDownloadURL()
           .then(url => {
