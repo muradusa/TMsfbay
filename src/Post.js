@@ -9,23 +9,22 @@ import "./Post.css";
 //   AccountCircle,
 // } from "@material-ui/icons";
 
-function Post({ file, input }) {
+function Post({ title, imgURL, username }) {
   return (
     <div className="post">
-      {/* <div className="post__top">
+      <div className="post__top">
         
         <div className="post__topInfo">
           <h3>{username}</h3>
-          <p>{new Date(timestamp?.toDate()).toUTCString()}</p>
+          {/* <p>{new Date(timestamp?.toDate()).toUTCString()}</p> */}
         </div>
-      </div> */}
+      </div>
       <div className="post__bottom">
-        <p>{input}</p>
+        <p>{title}</p>
       </div>
       <div className="post__image">
-        <img src={file} alt="" />
+        <img src={imgURL} alt="hey" />
       </div>
-      
     </div>
   );
 }
